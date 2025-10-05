@@ -3,51 +3,58 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Countdown</title>
+<title>Countdown (tight)</title>
 <style>
-  :root{--bg:#f3f5f6;--bd:#e5e7eb;--fg:#0b0b0b}
-  html,body{height:100%;margin:0}
-  body{display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:transparent;color:var(--fg)}
-  .pill{display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid var(--bd);background:var(--bg);font-variant-numeric:tabular-nums}
-  .num{font-size:34px;font-weight:800}
-  .lbl{font-size:14px}
-  .sep{font-size:20px; padding:0 8px; vertical-align:middle}
+  /* Remove any extra vertical space */
+  html,body { margin:0; padding:0; height:auto; background:transparent; }
+
+  /* Keep it compact */
+  .pill{
+    display:inline-flex;
+    align-items:baseline;
+    gap:8px;
+    padding:6px 10px;                /* ↓ smaller padding */
+    border-radius:10px;
+    border:1px solid #e5e7eb;
+    background:#f3f5f6;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    font-variant-numeric:tabular-nums;
+    line-height:1;                    /* ↓ tight line-height */
+  }
+  .num { font-size:28px; font-weight:800; }   /* ↓ smaller numbers */
+  .lbl { font-size:12px; }
+  .sep { font-size:16px; line-height:1; }
 </style>
 </head>
 <body>
   <div class="pill" id="pill" aria-live="polite">
     <span id="d" class="num">0</span> <span class="lbl">days</span>
-    <span class="sep"> . </span>
+    <span class="sep">.</span>
     <span id="h" class="num">00</span> <span class="lbl">hrs</span>
-    <span class="sep"> . </span>
+    <span class="sep">.</span>
     <span id="m" class="num">00</span> <span class="lbl">mins</span>
   </div>
 
 <script>
 (function(){
-  // Target: Oct 11, 2025 @ 9:00 AM New York (EDT = UTC-4) => 13:00 UTC
-  var targetMs = Date.UTC(2025, 9, 11, 13, 0, 0); // months are 0-based (9 = October)
-
+  // Oct 11, 2025 @ 9:00 AM New York (EDT = UTC-4) => 13:00 UTC
+  var targetMs = Date.UTC(2025, 9, 11, 13, 0, 0); // month index: 0=Jan, so 9=Oct
   function pad(n){ return String(n).padStart(2,'0'); }
-
   function tick(){
     var diff = targetMs - Date.now();
     if (diff <= 0){
       document.getElementById('pill').textContent = 'Registration is happening now!';
-      clearInterval(t);
-      return;
+      clearInterval(t); return;
     }
     var days  = Math.floor(diff / 86400000);
     var hours = Math.floor((diff % 86400000) / 3600000);
     var mins  = Math.floor((diff % 3600000) / 60000);
-
     document.getElementById('d').textContent = days;
     document.getElementById('h').textContent = pad(hours);
     document.getElementById('m').textContent = pad(mins);
   }
-
   tick();
-  var t = setInterval(tick, 30000); // update every 30s
+  var t = setInterval(tick, 30000);
 })();
 </script>
 </body>
