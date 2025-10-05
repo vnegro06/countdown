@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Countdown (tight)</title>
+<title>Countdown (tight centered)</title>
 <style>
-  /* Remove any extra vertical space */
-  html,body { margin:0; padding:0; height:auto; background:transparent; }
+  /* No full-height layout; no default margins */
+  html, body { margin:0; padding:0; background:transparent; }
+  body { font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; text-align:center; }
 
-  /* Keep it compact */
+  /* Compact pill */
   .pill{
     display:inline-flex;
     align-items:baseline;
     gap:8px;
-    padding:6px 10px;                /* ↓ smaller padding */
+    padding:6px 10px;               /* small vertical padding */
     border-radius:10px;
     border:1px solid #e5e7eb;
     background:#f3f5f6;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     font-variant-numeric:tabular-nums;
-    line-height:1;                    /* ↓ tight line-height */
+    line-height:1;                  /* tight */
   }
-  .num { font-size:28px; font-weight:800; }   /* ↓ smaller numbers */
+  .num { font-size:28px; font-weight:800; }
   .lbl { font-size:12px; }
   .sep { font-size:16px; line-height:1; }
 </style>
@@ -38,7 +38,7 @@
 <script>
 (function(){
   // Oct 11, 2025 @ 9:00 AM New York (EDT = UTC-4) => 13:00 UTC
-  var targetMs = Date.UTC(2025, 9, 11, 13, 0, 0); // month index: 0=Jan, so 9=Oct
+  var targetMs = Date.UTC(2025, 9, 11, 13, 0, 0);
   function pad(n){ return String(n).padStart(2,'0'); }
   function tick(){
     var diff = targetMs - Date.now();
