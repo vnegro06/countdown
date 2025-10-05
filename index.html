@@ -8,52 +8,45 @@
   :root{--bg:#f3f5f6;--bd:#e5e7eb;--fg:#0b0b0b}
   html,body{height:100%;margin:0}
   body{display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:transparent;color:var(--fg)}
-  .wrap{text-align:center}
   .pill{display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid var(--bd);background:var(--bg);font-variant-numeric:tabular-nums}
-  .big{font-size:40px;font-weight:800}
-  .small{font-size:12px}
-  p{margin:0}
+  .num{font-size:34px;font-weight:800}
+  .lbl{font-size:14px}
+  .sep{font-size:20px; padding:0 8px; vertical-align:middle}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <p style="margin-bottom:6px">Only</p>
-    <div class="pill" id="pill">
-      <span id="d" class="big">0</span> <span>days</span>
-      <div class="small" style="margin-top:4px">
-        <span id="h">00</span> hrs • <span id="m">00</span> mins
-      </div>
-    </div>
-    <p style="margin-top:8px">Days until In-Person Registration</p>
-    <noscript style="display:block;margin-top:8px;color:#6b7280">Enable JavaScript to see the live countdown.</noscript>
+  <div class="pill" id="pill" aria-live="polite">
+    <span id="d" class="num">0</span> <span class="lbl">days</span>
+    <span class="sep"> . </span>
+    <span id="h" class="num">00</span> <span class="lbl">hrs</span>
+    <span class="sep"> . </span>
+    <span id="m" class="num">00</span> <span class="lbl">mins</span>
   </div>
 
 <script>
 (function(){
-  // Target: Oct 11, 2025 @ 9:00 AM New York (EDT = UTC-4) => 13:00 UTC.
-  // If you change the event time, set the correct UTC time below.
-  var targetMs = Date.UTC(2025, 9, 11, 13, 0, 0); // months are 0-based (9=October)
+  // Target: Oct 11, 2025 @ 9:00 AM New York (EDT = UTC-4) => 13:00 UTC
+  var targetMs = Date.UTC(2025, 9, 11, 13, 0, 0); // months are 0-based (9 = October)
 
   function pad(n){ return String(n).padStart(2,'0'); }
 
   function tick(){
     var diff = targetMs - Date.now();
     if (diff <= 0){
-      document.getElementById('pill').innerHTML =
-        '<span style="font-size:18px;font-weight:700;">Registration is happening now!</span>';
+      document.getElementById('pill').textContent = 'Registration is happening now!';
       clearInterval(t);
       return;
     }
-    var days  = Math.floor(diff / 86400000);              // 1000*60*60*24
-    var hours = Math.floor((diff % 86400000) / 3600000);  // 1000*60*60
-    var mins  = Math.floor((diff % 3600000) / 60000);     // 1000*60
+    var days  = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    var mins  = Math.floor((diff % 3600000) / 60000);
 
     document.getElementById('d').textContent = days;
     document.getElementById('h').textContent = pad(hours);
     document.getElementById('m').textContent = pad(mins);
   }
 
-  tick();                       // initial paint
+  tick();
   var t = setInterval(tick, 30000); // update every 30s
 })();
 </script>
