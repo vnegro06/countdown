@@ -3,14 +3,23 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Countdown (Nov 8, 2025 8:45 AM ET)</title>
+<title>Countdown (tight centered)</title>
 <style>
+  /* No full-height layout; no default margins */
   html, body { margin:0; padding:0; background:transparent; }
   body { font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; text-align:center; }
+
+  /* Compact pill */
   .pill{
-    display:inline-flex; align-items:baseline; gap:8px;
-    padding:6px 10px; border-radius:10px; border:1px solid #e5e7eb; background:#f3f5f6;
-    font-variant-numeric:tabular-nums; line-height:1;
+    display:inline-flex;
+    align-items:baseline;
+    gap:8px;
+    padding:6px 10px;               /* small vertical padding */
+    border-radius:10px;
+    border:1px solid #e5e7eb;
+    background:#f3f5f6;
+    font-variant-numeric:tabular-nums;
+    line-height:1;                  /* tight */
   }
   .num { font-size:28px; font-weight:800; }
   .lbl { font-size:12px; }
@@ -29,7 +38,7 @@
 <script>
 (function(){
   // Target: Nov 8, 2025 @ 8:45 AM New York (EST = UTC-5) => 13:45 UTC
-  var targetMs = Date.UTC(2025, 10, 8, 13, 45, 0); // month 0-based: 10 = November
+  var targetMs = Date.UTC(2025, 10, 8, 13, 45, 0); // months are 0-based (10 = November)
 
   function pad(n){ return String(n).padStart(2,'0'); }
   function tick(){
