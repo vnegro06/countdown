@@ -4,56 +4,93 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Countdown (tight centered)</title>
-<style>
-  /* No full-height layout; no default margins */
-  html, body { margin:0; padding:0; background:transparent; }
-  body { font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; text-align:center; }
 
-  /* Compact pill */
-  .pill{
+<style>
+  html, body {
+    margin:0;
+    padding:0;
+    background:transparent;
+  }
+
+  body {
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    text-align:center;
+  }
+
+  .pill {
     display:inline-flex;
     align-items:baseline;
     gap:8px;
-    padding:6px 10px;               /* small vertical padding */
+    padding:6px 10px;
     border-radius:10px;
     border:1px solid #e5e7eb;
     background:#f3f5f6;
     font-variant-numeric:tabular-nums;
-    line-height:1;                  /* tight */
+    line-height:1;
   }
-  .num { font-size:28px; font-weight:800; }
-  .lbl { font-size:12px; }
-  .sep { font-size:16px; line-height:1; }
+
+  .num {
+    font-size:28px;
+    font-weight:800;
+  }
+
+  .lbl {
+    font-size:12px;
+  }
+
+  .sep {
+    font-size:16px;
+    line-height:1;
+  }
 </style>
 </head>
+
 <body>
+
   <div class="pill" id="pill" aria-live="polite">
-    <span id="d" class="num">0</span> <span class="lbl">days</span>
+    <span id="d" class="num">0</span>
+    <span class="lbl">days</span>
+
     <span class="sep">.</span>
-    <span id="h" class="num">00</span> <span class="lbl">hrs</span>
+
+    <span id="h" class="num">00</span>
+    <span class="lbl">hrs</span>
+
     <span class="sep">.</span>
-    <span id="m" class="num">00</span> <span class="lbl">mins</span>
+
+    <span id="m" class="num">00</span>
+    <span class="lbl">mins</span>
   </div>
 
 <script>
 (function(){
-  // Target: Nov 12, 2026 @ 3:15 PM New York (EST = UTC-5) => 20:15 UTC
-  var targetMs = Date.UTC(2026, 10, 12, 20, 15, 0); // months are 0-based (10 = November)
 
-  function pad(n){ return String(n).padStart(2,'0'); }
+  // Target: Nov 12, 2026 @ 3:15 PM EST
+  var targetMs = Date.UTC(2026, 10, 12, 20, 15, 0);
+
+  function pad(n){
+    return String(n).padStart(2,'0');
+  }
 
   function tick(){
+
     var diff = targetMs - Date.now();
 
     if (diff <= 0){
-      document.getElementById('pill').textContent = 'Registration is happening now!';
+      document.getElementById('pill').textContent =
+        'The season has officially begun!';
       clearInterval(t);
       return;
     }
 
-    var days  = Math.floor(diff / 86400000);
-    var hours = Math.floor((diff % 86400000) / 3600000);
-    var mins  = Math.floor((diff % 3600000) / 60000);
+    var days =
+      Math.floor(diff / 86400000);
+
+    var hours =
+      Math.floor((diff % 86400000) / 3600000);
+
+    var mins =
+      Math.floor((diff % 3600000) / 60000);
 
     document.getElementById('d').textContent = days;
     document.getElementById('h').textContent = pad(hours);
@@ -61,8 +98,11 @@
   }
 
   tick();
+
   var t = setInterval(tick, 30000);
+
 })();
 </script>
+
 </body>
 </html>
