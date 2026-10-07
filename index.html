@@ -37,23 +37,29 @@
 
 <script>
 (function(){
-  // Target: Nov 8, 2025 @ 8:45 AM New York (EST = UTC-5) => 13:45 UTC
-  var targetMs = Date.UTC(2025, 10, 8, 13, 45, 0); // months are 0-based (10 = November)
+  // Target: Nov 12, 2026 @ 3:15 PM New York (EST = UTC-5) => 20:15 UTC
+  var targetMs = Date.UTC(2026, 10, 12, 20, 15, 0); // months are 0-based (10 = November)
 
   function pad(n){ return String(n).padStart(2,'0'); }
+
   function tick(){
     var diff = targetMs - Date.now();
+
     if (diff <= 0){
       document.getElementById('pill').textContent = 'Registration is happening now!';
-      clearInterval(t); return;
+      clearInterval(t);
+      return;
     }
+
     var days  = Math.floor(diff / 86400000);
     var hours = Math.floor((diff % 86400000) / 3600000);
     var mins  = Math.floor((diff % 3600000) / 60000);
+
     document.getElementById('d').textContent = days;
     document.getElementById('h').textContent = pad(hours);
     document.getElementById('m').textContent = pad(mins);
   }
+
   tick();
   var t = setInterval(tick, 30000);
 })();
